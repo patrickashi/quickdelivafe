@@ -29,20 +29,32 @@ export default function Orders() {
     fetchOrders();
   }, []);
 
-  // ------- REGION PRICING MATRIX ------
-  const pricing = {
-    Igoli: { Igoli: 1500, Okuku: 2000, Abakpa: 2000, Abouchiche: 2500 },
-    Okuku: { Igoli: 2000, Okuku: 1500, Abakpa: 3000, Abouchiche: 3500 },
-    Abakpa: { Igoli: 2000, Okuku: 3000, Abakpa: 1500, Abouchiche: 3500 },
-    Abouchiche: { Igoli: 2500, Okuku: 3500, Abakpa: 3500, Abouchiche: 1500 },
-  };
+ // ------- REGION PRICING MATRIX (bike baseline) ------
+const basePricing = {
+  Igoli: { Igoli: 1500, Okuku: 2000, Abakpa: 2000, Abouchiche: 2500 },
+  Okuku: { Igoli: 2000, Okuku: 1500, Abakpa: 3000, Abouchiche: 3500 },
+  Abakpa: { Igoli: 2000, Okuku: 3000, Abakpa: 1500, Abouchiche: 3500 },
+  Abouchiche: { Igoli: 2500, Okuku: 3500, Abakpa: 3500, Abouchiche: 1500 },
+};
 
-  // recompute delivery amount whenever regions change
-  useEffect(() => {
-    const pickup = form.pickup_region;
-    const delivery = form.delivery_region;
-    setAmount(pricing[pickup][delivery] || 0);
-  }, [form.pickup_region, form.delivery_region]);
+// vehicle multipliers relative to bike price
+const vehicleMultiplier = {
+  bike: 1.0,
+  keke: 1.5,
+  van: 4.0,
+  truck: 8.0,
+};
+
+// recompute whenever region OR vehicle changes
+useEffect(() => {
+  const pickup = form.pickup_region;
+  const delivery = form.delivery_region;
+  const vehicle = form.preferred_vehicle;
+  
+  const base = basePricing[pickup]?.[delivery] || 0;
+  const multiplier = vehicleMultiplier[vehicle] || 1;
+  setAmount(base * multiplier);
+}, [form.pickup_region, form.delivery_region, form.preferred_vehicle]);
 
   const fetchOrders = async () => {
     try {
@@ -196,9 +208,9 @@ export default function Orders() {
                        text-gray-900 dark:text-white border-gray-300 dark:border-gray-600"
             >
               <option value="bike">Bike</option>
-              <option value="keke">Keke (Talk to our Agent using the chatbox)</option>
-              <option value="van">Van (Talk to our Agent using the chatbox below)</option>
-              <option value="truck">Truck (Talk to our Agent using the chatbox below)</option>
+              <option value="keke">Keke</option>
+              <option value="van">Van </option>
+              <option value="truck">Truck</option>
             </select>
           </div>
 

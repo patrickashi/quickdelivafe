@@ -39,7 +39,7 @@ export default function Login() {
       <Navbar />
       <div className="min-h-screen flex items-center justify-center px-6">
         <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-8">
-          <h1 className="text-2xl font-bold text-quickdeliva mb-6">Login</h1>
+          <h1 className="text-2xl font-bold text-quickdeliva mb-6 text-center">Login</h1>
           <form onSubmit={handleSubmit}>
             <Input
               label="Email or Username"

@@ -55,7 +55,7 @@ export default function Signup() {
       <Navbar />
       <div className="min-h-screen flex items-center justify-center px-6 my-8">
         <div className="max-w-md w-full bg-white shadow-lg rounded-lg p-8">
-          <h1 className="text-2xl font-bold text-quickdeliva mb-6">Sign Up</h1>
+          <h1 className="text-2xl font-bold text-quickdeliva mb-6 text-center">Sign Up</h1>
           <form onSubmit={handleSubmit}>
             <Input label="Username" name="username" value={form.username} onChange={handleChange} />
             <Input label="Email" name="email" type="email" value={form.email} onChange={handleChange} />
