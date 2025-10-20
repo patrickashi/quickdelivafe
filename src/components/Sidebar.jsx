@@ -45,7 +45,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
             <nav className="space-y-4">
               <Link to="/dashboard" className="block text-gray-700 dark:text-gray-200 hover:text-quickdeliva">Dashboard</Link>
               <Link to="/profile" className="block text-gray-700 dark:text-gray-200 hover:text-quickdeliva">Profile</Link>
-              <Link to="/orders" className="block text-gray-700 dark:text-gray-200 hover:text-quickdeliva">Orders</Link>
+              <Link to="/orders" className="block text-gray-700 dark:text-gray-200 hover:text-quickdeliva">Create an order</Link>
+              <Link to="/transactionhistoryp" className="block text-gray-700 dark:text-gray-200 hover:text-quickdeliva">Transaction History</Link>
             </nav>
           </div>
 

@@ -11,6 +11,7 @@ import Profile from "./pages/Profile";
 import { useContext, useEffect } from "react";
 import { ThemeContext } from "./context/ThemeContext";
 import Orders from "./pages/Orders";
+import Transactionhistoryp from "./pages/Transactionhistoryp";
 
 function App() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
@@ -35,6 +36,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify" element={<Verify />} />
+        <Route path="/transactionhistoryp" element={<Transactionhistoryp />} />
         
         {/* Authenticated - dark/light toggle allowed */}
         <Route path="/dashboard" element={<Dashboard />} />
