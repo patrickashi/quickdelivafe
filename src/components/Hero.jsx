@@ -29,7 +29,7 @@ export default function Hero() {
           <span>Fast, Reliable, Efficient</span>
         </div>
 
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight drop-shadow-2xl">
+        <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight drop-shadow-2xl">
           Deliver Fast with{" "}
           <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
             Quickdeliva
