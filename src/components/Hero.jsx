@@ -9,7 +9,7 @@ import herobg from "../assets/herobg.jpg"; // ✅ your local image here
 export default function Hero() {
   return (
     <section
-      className="font-[sora] relative overflow-hidden pt-36 pb-20 px-6  text-center text-white"
+      className="font-[sora] relative h-screen overflow-hidden pt-36 pb-20 px-6  text-center text-white"
     >
       {/* --- Background image with dark overlay & blur --- */}
       <div
@@ -36,8 +36,8 @@ export default function Hero() {
           </span>
         </h1>
 
-        <p className="text-lg md:text-xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed">
-          The easiest way to send and track your orders — from individuals to SMEs.  
+        <p className="text-md md:text-xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed">
+          The easiest way to send and track your orders from individuals to SMEs.  
           Real‑time tracking, secure delivery, and a platform built for speed.
         </p>
 
