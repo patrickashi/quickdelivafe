@@ -13,7 +13,7 @@ export default function CTA() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link to="/signup">
             <button className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all duration-300">
-              Start Free Trial
+              Start for Free
             </button>
           </Link>
           <Link to="/contact">

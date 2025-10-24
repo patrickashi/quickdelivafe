@@ -58,9 +58,15 @@ export default function Login() {
               {loading ? "Logging in..." : "Login"}
             </Button>
           </form>
+          <p className="text-sm text-center mt-4">
+            Forgot password?
+            <Link to="/forgot-password" className="text-quickdeliva hover:underline ml-2">
+              Reset
+            </Link>
+          </p>
 
           {/* Signup link */}
-          <p className="mt-4 text-sm text-center text-gray-600">
+          <p className="mt-2 text-sm text-center text-gray-600">
             Don’t have an account?{" "}
             <Link to="/signup" className="text-quickdeliva hover:underline">Sign up</Link>
           </p>

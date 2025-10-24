@@ -7,8 +7,8 @@ export default function HowItWorks() {
     },
     {
       number: "02",
-      title: "Choose Your Rider",
-      description: "Select from available riders based on ratings, distance, and delivery time."
+      title: "Choose Vehicle Type",
+      description: "Chose from bike, car, or van based on your package size and urgency."
     },
     {
       number: "03",
@@ -37,7 +37,7 @@ export default function HowItWorks() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
             <div key={index} className="relative">
-              <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
+              <div className="bg-white dark:bg-gray-800 px-4 py-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow">
                 <div className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-br from-blue-600 to-purple-600 mb-4">
                   {step.number}
                 </div>

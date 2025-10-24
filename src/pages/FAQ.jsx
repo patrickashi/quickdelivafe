@@ -17,12 +17,12 @@ export default function FAQ() {
     {
       question: "What areas do you cover?",
       answer:
-        "We currently operate across Igoli, Okuku, Abakpa, and Abouchiche, with more areas launching soon.",
+        "We currently operate in Nothern Cross River covering specific Areas which includes: Igoli, Okuku, Abakpa, Abouchiche And Ikom with more areas launching soon.",
     },
     {
       question: "How is delivery cost calculated?",
       answer:
-        "Your delivery amount is automatically determined by pickup region, delivery region, and the type of vehicle selected. Transparency, always.",
+        "Your delivery amount is automatically determined by pickup - delivery region, and the type of vehicle selected. Transparency, always.",
     },
     {
       question: "Can I track my package in real time?",

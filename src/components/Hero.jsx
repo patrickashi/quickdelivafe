@@ -47,7 +47,7 @@ export default function Hero() {
             <button className="group bg-gradient-to-r from-blue-600 to-purple-600 text-white 
                                px-8 py-4 rounded-lg font-semibold text-lg hover:brightness-110 
                                hover:shadow-lg transition-all duration-300 flex items-center gap-2">
-              Get Started Free
+              Get Started
               <HiArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </Link>
@@ -60,7 +60,7 @@ export default function Hero() {
         </div>
 
         {/* Highlights */}
-        <div className="mt-16 flex flex-wrap justify-center gap-8 text-sm text-gray-200">
+        {/* <div className="mt-16 flex flex-wrap justify-center gap-8 text-sm text-gray-200">
           {[
             "No credit card required",
             "Free for 30 days",
@@ -71,7 +71,8 @@ export default function Hero() {
               <span>{text}</span>
             </div>
           ))}
-        </div>
+        </div> */}
+
       </div>
     </section>
   );

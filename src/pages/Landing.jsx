@@ -13,7 +13,7 @@ export default function Landing() {
       <Hero />
       <Features />
       <HowItWorks />
-      <Pricing />
+      {/* <Pricing /> */}
       <CTA />
       <Footer />
     </div>

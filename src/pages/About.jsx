@@ -42,7 +42,7 @@ export default function About() {
             <p className="text-gray-700 dark:text-gray-300 leading-7">
               To create a dynamic and accessible delivery ecosystem that empowers
               individuals, supports local businesses, and brings convenience right
-              to your doorstep. We believe every delivery—big or small—deserves
+              to your doorstep. We believe every delivery big or small deserves
               speed, safety, and care.
             </p>
           </div>
@@ -59,7 +59,7 @@ export default function About() {
           {[
             {
               title: "Fast & Reliable",
-              desc: "Our riders know your time is precious—we prioritize speed without compromising on safety.",
+              desc: "Our riders know your time is precious we prioritize speed without compromising on safety.",
               icon: "🚀",
             },
             {
