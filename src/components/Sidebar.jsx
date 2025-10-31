@@ -7,6 +7,7 @@ import {
   HiOutlinePlusCircle,
   HiOutlineClock,
   HiOutlineLogout,
+  HiOutlineMap
 } from "react-icons/hi";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useContext } from "react";
@@ -32,6 +33,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
     { to: "/profile", icon: HiOutlineUser, label: "Profile" },
     { to: "/orders", icon: HiOutlinePlusCircle, label: "Create an Order" },
     { to: "/transactionhistoryp", icon: HiOutlineClock, label: "Transaction History" },
+    { to: "/live-tracking", icon: HiOutlineMap, label: "Live Tracking" },
   ];
 
   return (

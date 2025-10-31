@@ -247,7 +247,7 @@ export default function Orders() {
           />
 
           {amount > 0 && (
-            <div className="bg-gray-100 dark:bg-gray-700 text-center py-3 rounded-md font-semibold text-gray-800 dark:text-gray-100">
+            <div className="bg-green-500 dark:bg-green-500 text-center py-3 rounded-md font-semibold text-gray-100 dark:text-gray-100">
               Estimated Delivery Amount: ₦{amount.toLocaleString()}
             </div>
           )}
