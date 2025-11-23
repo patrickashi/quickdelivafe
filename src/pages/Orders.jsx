@@ -38,7 +38,7 @@ export default function Orders() {
     Abouchiche: { Igoli: 2500, Okuku: 3500, Abakpa: 3500, Abouchiche: 1500 },
   };
 
-  // vehicle multipliers relative to bike price
+  // vehicle multipliers relative to bike baseline
   const vehicleMultiplier = {
     bike: 1.0,
     keke: 1.5,
@@ -46,12 +46,11 @@ export default function Orders() {
     truck: 8.0,
   };
 
-  // recompute whenever region OR vehicle changes
+  // recompute amount when regions/vehicle change
   useEffect(() => {
     const pickup = form.pickup_region;
     const delivery = form.delivery_region;
     const vehicle = form.preferred_vehicle;
-
     const base = basePricing[pickup]?.[delivery] || 0;
     const multiplier = vehicleMultiplier[vehicle] || 1;
     setAmount(base * multiplier);
@@ -72,38 +71,35 @@ export default function Orders() {
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
+  // -------------- Submit + Paystack flow ----------------
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!amount) {
-      alert("Please select pickup and delivery regions");
+      alert("Please select pickup and delivery regions first.");
       return;
     }
 
     setLoading(true);
     try {
-      await api.post("/orders/", { ...form, delivery_amount: amount });
-      alert(`Delivery request submitted ✅\nAmount: ₦${amount}`);
-      setForm({
-        pickup_region: "Igoli",
-        delivery_region: "Igoli",
-        pickup_address: "",
-        delivery_address: "",
-        package_description: "",
-        preferred_vehicle: "bike",
-        delivery_date: "",
-        delivery_time: "",
-        special_instructions: "",
-      });
-      fetchOrders();
-      setAmount(0);
+      // 1️⃣  Create order on backend
+      const orderRes = await api.post("/orders/", { ...form, delivery_amount: amount });
+      const orderId = orderRes.data.id;
+
+      // 2️⃣  Initialize Paystack payment
+      const payRes = await api.post(`/orders/${orderId}/paystack/init/`);
+      const authUrl = payRes.data.authorization_url;
+
+      // 3️⃣  Redirect to Paystack checkout
+      window.location.href = authUrl;
     } catch (err) {
       console.error(err.response?.data || err);
-      alert("Failed to place delivery request ❌");
+      alert("Payment initialization failed ❌");
     } finally {
       setLoading(false);
     }
   };
 
+  // -------------------- UI --------------------
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 font-comfortaa">
       <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
@@ -112,37 +108,30 @@ export default function Orders() {
         className="flex-1 p-6 lg:ml-64 text-gray-900 dark:text-gray-100
                    transition-all duration-300 ease-in-out"
       >
-        {/* -------------------- Mobile Header -------------------- */}
+        {/* Mobile header */}
         <div className="flex items-center justify-between mb-6 lg:hidden">
           <div className="flex items-center gap-2">
-            <img
-              src={quickdelivalogo_transparent}
-              alt="QuickDeliva logo"
-              className="h-12"
-            />
+            <img src={quickdelivalogo_transparent} alt="QuickDeliva logo" className="h-12" />
           </div>
-          
           <button
             onClick={() => setSidebarOpen(true)}
-            className="p-2 border border-gray-300 dark:border-gray-700 
-            rounded-md text-gray-600 dark:text-gray-200"
+            className="p-2 border border-gray-300 dark:border-gray-700 rounded-md text-gray-600 dark:text-gray-200"
           >
             <HiMenuAlt3 size={24} />
           </button>
         </div>
-        <h1 className="font-[sora] my-8 text-xl block md:hidden font-bold text-quickdeliva">Orders</h1>
 
-        {/* -------------------- Desktop Header -------------------- */}
-        <h1 className="font-[sora] hidden lg:block text-2xl font-bold text-quickdeliva mb-6">
+        <h1 className="font-[Sora] hidden lg:block text-2xl font-bold text-quickdeliva mb-6">
           Orders
         </h1>
 
-        {/* -------------------- Create Order Form -------------------- */}
+        {/* ---------- Order Form ---------- */}
         <form
           onSubmit={handleSubmit}
           className="max-w-xl bg-white dark:bg-gray-800 p-6 md:p-8 rounded-xl shadow space-y-5"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Pickup & Delivery Region */}
             <div>
               <label className="block mb-1 text-gray-700 dark:text-gray-200 font-medium">
                 Pickup Region
@@ -187,33 +176,28 @@ export default function Orders() {
             name="pickup_address"
             value={form.pickup_address}
             onChange={handleChange}
+            required
           />
-
-          <Input
-            label="Delivery Address"
-            name="delivery_address"
-            value={form.delivery_address}
-            onChange={handleChange}
-          />
+          <Input label="Delivery Address" name="delivery_address" value={form.delivery_address} onChange={handleChange} required />
 
           <div>
-            <label className="block mb-1 text-gray-700 dark:text-gray-200 font-medium">
+            <label className="block mb-1 font-medium text-gray-700 dark:text-gray-200">
               Package Description
             </label>
             <textarea
               name="package_description"
               value={form.package_description}
               onChange={handleChange}
-              className="w-full border rounded-lg px-3 py-2 bg-white dark:bg-gray-700 
-                         text-gray-900 dark:text-white border-gray-300 dark:border-gray-600
-                         focus:ring-2 focus:ring-quickdeliva outline-none"
               rows="3"
-              placeholder="e.g 1 carton of cement, 2 bags of rice, etc."
+              placeholder="e.g 1 carton of cement, 2 bags of rice…"
+              className="w-full border rounded-lg px-3 py-2 bg-white dark:bg-gray-700 
+                         text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 
+                         focus:ring-2 focus:ring-quickdeliva outline-none"
             />
           </div>
 
           <div>
-            <label className="block mb-1 text-gray-700 dark:text-gray-200 font-medium">
+            <label className="block mb-1 font-medium text-gray-700 dark:text-gray-200">
               Preferred Vehicle
             </label>
             <select
@@ -221,7 +205,7 @@ export default function Orders() {
               value={form.preferred_vehicle}
               onChange={handleChange}
               className="w-full border rounded-lg px-3 py-2 bg-white dark:bg-gray-700 
-                         text-gray-900 dark:text-white border-gray-300 dark:border-gray-600
+                         text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 
                          focus:ring-2 focus:ring-quickdeliva outline-none"
             >
               <option value="bike">Bike</option>
@@ -231,54 +215,40 @@ export default function Orders() {
             </select>
           </div>
 
-          <Input
-            label="Preferred Delivery Date"
-            type="date"
-            name="delivery_date"
-            value={form.delivery_date}
-            onChange={handleChange}
-          />
-          <Input
-            label="Preferred Delivery Time"
-            type="time"
-            name="delivery_time"
-            value={form.delivery_time}
-            onChange={handleChange}
-          />
+          <Input label="Preferred Delivery Date" type="date" name="delivery_date" value={form.delivery_date} onChange={handleChange} />
+          <Input label="Preferred Delivery Time" type="time" name="delivery_time" value={form.delivery_time} onChange={handleChange} />
 
           {amount > 0 && (
-            <div className="bg-green-500 dark:bg-green-500 text-center py-3 rounded-md font-semibold text-gray-100 dark:text-gray-100">
+            <div className="bg-green-600 text-center py-3 rounded-md font-semibold text-white">
               Estimated Delivery Amount: ₦{amount.toLocaleString()}
             </div>
           )}
 
           <div>
-            <label className="block mb-1 text-gray-700 dark:text-gray-200 font-medium">
+            <label className="block mb-1 font-medium text-gray-700 dark:text-gray-200">
               Special Instructions
             </label>
             <textarea
               name="special_instructions"
               value={form.special_instructions}
               onChange={handleChange}
-              className="w-full border rounded-lg px-3 py-2 bg-white dark:bg-gray-700 
-                         text-gray-900 dark:text-white border-gray-300 dark:border-gray-600
-                         focus:ring-2 focus:ring-quickdeliva outline-none"
               rows="2"
               placeholder="Any delivery notes?"
+              className="w-full border rounded-lg px-3 py-2 bg-white dark:bg-gray-700 
+                         text-gray-900 dark:text-white border-gray-300 dark:border-gray-600 
+                         focus:ring-2 focus:ring-quickdeliva outline-none"
             />
           </div>
 
           <Button className="w-full" disabled={loading}>
-            {loading ? "Submitting…" : "Proceed to Payment"}
+            {loading ? "Processing…" : "Proceed to Payment"}
           </Button>
         </form>
 
-        {/* -------------------- Transaction History -------------------- */}
+        {/* -------- Transaction History -------- */}
         <div className="mt-16 mb-10">
           {fetching ? (
-            <p className="text-center text-gray-500 dark:text-gray-400">
-              Loading orders…
-            </p>
+            <p className="text-center text-gray-500 dark:text-gray-400">Loading orders…</p>
           ) : (
             <TransactionHistory transactions={orders} />
           )}

@@ -16,6 +16,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import LiveTracking from "./pages/LiveTracking";
 import DriverTracker from "./pages/DriverTracker";
+import VerifyPayment from "./pages/VerifyPayment";
 
 function App() {
   const { darkMode, setDarkMode } = useContext(ThemeContext);
@@ -51,6 +52,7 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/live-tracking" element={<LiveTracking />} />
         <Route path="/driver-tracker" element={<DriverTracker />} />
+        <Route path="/payment/verify/:reference" element={<VerifyPayment />} />
         
       </Routes>
     </BrowserRouter>
